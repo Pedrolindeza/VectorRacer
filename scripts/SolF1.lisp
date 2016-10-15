@@ -19,6 +19,9 @@
   t)
 
 (defun isGoalp (st) 
+	(cond ( (equal (nth (cdr st-pos) (nth (car st-pos ) st-track )) 'E  ) (return t))
+		(t (return nil))
+	)
   "check if st is a goal state"
   t)
 
