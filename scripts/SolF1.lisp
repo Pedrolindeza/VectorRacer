@@ -12,6 +12,9 @@
 ;(load "auxfuncs.fas")
 
 (defun isObstaclep (pos track) 
+	(cond ((nth (cdr pos) (nth (car pos) track-env )) (return nil))
+		(t (return t))
+	)
   "check if there is an obstacle at position pos of the track"
   t)
 
@@ -25,5 +28,4 @@
 	      :VEL '(1 3)
 	      :ACTION act
 	      :COST -100))
-
 
