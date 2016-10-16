@@ -12,15 +12,15 @@
 ;(load "auxfuncs.fas")
 
 (defun isObstaclep (pos track) 
-	(cond ((nth (cdr pos) (nth (car pos) track-env )) (return nil))
-		(t (return t))
+	(cond ((nth (cdr pos) (nth (car pos) track-env )) (nil))
+		(t (t))
 	)
   "check if there is an obstacle at position pos of the track"
   t)
 
 (defun isGoalp (st) 
-	(cond ( (equal (nth (cdr st-pos) (nth (car st-pos ) st-track )) 'E  ) (return t))
-		(t (return nil))
+	(cond ( (equal (nth (cdr st-pos) (nth (car st-pos ) st-track )) 'E  ) (t))
+		(t (nil))
 	)
   "check if st is a goal state"
   t)
