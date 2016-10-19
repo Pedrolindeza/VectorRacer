@@ -18,15 +18,13 @@
 )
 
 (defun isGoalp (st) 
-	(cond ( (equal (nth (cdr st-pos) (nth (car st-pos ) st-track )) 'E  ) (t))
-		(t (nil))
-	)
-  t)
+	(equal (find  (state-pos st) (track-endpositions (state-track st)) :test #'equal ) (state-pos st) ))
 
 (defun nextState (st act)
-  "generate the nextState after state st and action act"
-  (make-STATE :POS '(3 16)
-	      :VEL '(1 3)
-	      :ACTION act
-	      :COST -100))
+	(setf
+		(state-action st) act) st)
+;	      :VEL '(1 3)
+ ; (make-STATE :POS '(3 16)
+;	      :ACTION act
+;	      :COST -100))
 
