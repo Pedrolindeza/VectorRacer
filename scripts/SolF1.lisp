@@ -3,13 +3,13 @@
 
 ;;; Utilizar estes includes para os testes na versao local
 ;;; comentar antes de submeter
-(load "datastructures.lisp")
-(load "auxfuncs.lisp")
+;(load "datastructures.lisp")
+;(load "auxfuncs.lisp")
 
 ;;; Utilizar estes includes para a versao a submeter
 ; tirar o comentario antes de submeter
-;(load "datastructures.fas")
-;(load "auxfuncs.fas")
+(load "datastructures.fas")
+(load "auxfuncs.fas")
 
 (defun isObstaclep (pos track) 
   (not (nth (second pos) 
@@ -32,12 +32,18 @@
 
 )
 
+(defvar cost 1)
+(defvar velnul (list 0 0))
+(defvar vel nil)
+(defvar pos nil)
+(defvar teststate nil)
+(defvar state nil)
+
 (defun nextState (st act)
-	(setq cost 1)
-	(setq velnul (list 0 0))
-	(setq  vel (list  (+ (first (state-vel st)) (first act) ) (+ (second (state-vel st)) (second act) ) )  )
-	(setq pos (list (+ (first (state-pos st)) (first vel)) (+ (second (state-pos st)) (second vel))  ))
-	(setq teststate (make-STATE :POS pos
+	(setf cost 1)
+	(setf  vel (list  (+ (first (state-vel st)) (first act) ) (+ (second (state-vel st)) (second act) ) )  )
+	(setf  pos (list (+ (first (state-pos st)) (first vel)) (+ (second (state-pos st)) (second vel))  ))
+	(setf teststate (make-STATE :POS pos
 	  		      				:VEL vel
 	  		      				:ACTION act
 	  		      				:COST cost
@@ -46,18 +52,18 @@
 
 	(cond ( (not (isObstaclep  pos (state-track st)))
 			(cond ( (isGoalp teststate) 
-					(setq cost -100)
+					(setf cost -100)
 				  )
 			)
 		  )
-		  (t (setq cost 20 vel velnul) )
+		  (t (setf cost 20 vel velnul) )
 	)
-		(setq teststate (make-STATE :POS pos
+		(setf state (make-STATE :POS pos
 	  		      				:VEL vel
 	  		      				:ACTION act
 	  		      				:COST cost
 	  		      				:TRACK (state-track st)
 	  		      				:OTHER nil))
 
-
+	state
 )
