@@ -12,19 +12,52 @@
 ;(load "auxfuncs.fas")
 
 (defun isObstaclep (pos track) 
-	 (not (nth (second pos) 
+  (not (nth (second pos) 
          (nth (first pos) 
-             (track-env track))))
+             (track-env track)
+         )
+        )
+  )
 )
 
 (defun isGoalp (st) 
-	(equal (find  (state-pos st) (track-endpositions (state-track st)) :test #'equal ) (state-pos st) ))
+	  (equal 
+	  	(find  
+	  		(state-pos st) 
+	  		(track-endpositions
+	  			(state-track st)) :test #'equal 
+	  	) 
+	  	(state-pos st) 
+	  )
+
+)
 
 (defun nextState (st act)
-	(setf
-		(state-action st) act) st)
-;	      :VEL '(1 3)
- ; (make-STATE :POS '(3 16)
-;	      :ACTION act
-;	      :COST -100))
+	(setq cost 1)
+	(setq velnul (list 0 0))
+	(setq  vel (list  (+ (first (state-vel st)) (first act) ) (+ (second (state-vel st)) (second act) ) )  )
+	(setq pos (list (+ (first (state-pos st)) (first vel)) (+ (second (state-pos st)) (second vel))  ))
+	(setq teststate (make-STATE :POS pos
+	  		      				:VEL vel
+	  		      				:ACTION act
+	  		      				:COST cost
+	  		      				:TRACK (state-track st)
+	  		      				:OTHER nil))
 
+	(cond ( (not (isObstaclep  pos (state-track st)))
+			(cond ( (isGoalp teststate) 
+					(setq cost -100)
+				  )
+			)
+		  )
+		  (t (setq cost 20 vel velnul) )
+	)
+		(setq teststate (make-STATE :POS pos
+	  		      				:VEL vel
+	  		      				:ACTION act
+	  		      				:COST cost
+	  		      				:TRACK (state-track st)
+	  		      				:OTHER nil))
+
+
+)
